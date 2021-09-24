@@ -18,7 +18,7 @@ months = []
 total = []
 change = []
 
-with open(csvpath) as csvfile:
+with open(csvpath, encoding='utf-8') as csvfile:
     csvreader = csv.reader(csvfile, delimiter = ',')
     csv_header = next(csvreader)
     #print(f"CSV Header: {csv_header}")
@@ -32,26 +32,25 @@ for row in total:
     i = total.index(row)
     if i > 0:
         change.append(total[i]-total[i-1])
-        
 
+# Printing results to terminal    
 print("Financial Analysis\n--------------------")
 print(f'Total Months: {len(months)}')
 print(f'Total: ${sum(total)}')
 print(f'Average Change: ${round(average(change),2)}')
-# index + 1 to account for change list having one less element
-greatest_increase_month = (months[change.index(max(change))+1])
-greatest_decrease_month = (months[change.index(min(change))+1])
+greatest_increase_month = (months[change.index(max(change))+1]) # index + 1 to account for change list having one less element
+greatest_decrease_month = (months[change.index(min(change))+1]) # index + 1 to account for change list having one less element
 print(f'Greatest Increase in Profits: {greatest_increase_month} (${max(change)})')
 print(f'Greatest Decrease in Profits: {greatest_decrease_month} (${min(change)})')
 
-
-
-
-
-
-
-
-
-
-
-
+# exporting a text file with the results
+output_path = os.path.join('C:/Users/Laura/Desktop/Homework/python-challenge/PyBank/analysis/new.csv')
+with open(output_path, 'w', newline='') as csvfile:
+    csvwriter = csv.writer(csvfile, delimiter=',')
+    csvwriter.writerow(["Financial Analysis"])
+    csvwriter.writerow(["---------------------"])
+    csvwriter.writerow([f'Total Months: {len(months)}'])
+    csvwriter.writerow([f'Total: ${sum(total)}'])
+    csvwriter.writerow([f'Average Change: ${round(average(change),2)}'])
+    csvwriter.writerow([f'Greatest Increase in Profits: {greatest_increase_month} (${max(change)})'])
+    csvwriter.writerow([f'Greatest Decrease in Profits: {greatest_decrease_month} (${min(change)})'])
