@@ -73,7 +73,9 @@ with open(output_path, 'w', newline='') as csvfile:
     csvwriter.writerow(["---------------------"])
     csvwriter.writerow([f'Total Votes: {total_votes}'])
     csvwriter.writerow(["---------------------"])
-    for x,y,z in zip(candidate_list, ratio_list, votes_list):
-        csvwriter.writerow(f' {x} : {y}% ({z})')
+    csvwriter.writerow([f'{candidate_list[0]}: {ratio_list[0]}% ({votes_list[0]})'])
+    csvwriter.writerow([f'{candidate_list[1]}: {ratio_list[1]}% ({votes_list[1]})'])
+    csvwriter.writerow([f'{candidate_list[2]}: {ratio_list[2]}% ({votes_list[2]})'])
+    csvwriter.writerow([f'{candidate_list[3]}: {ratio_list[3]}% ({votes_list[3]})'])
     csvwriter.writerow(["---------------------"])
     csvwriter.writerow([f'Winner: {winner}'])
