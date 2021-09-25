@@ -3,24 +3,20 @@ import os
 import csv
 csvpath = os.path.join('C:/Users/Laura/Desktop/Homework/python-challenge/PyPoll/Resources/election_data.csv')
 
-# creating lists
+# creating candidate variable
 candidate = []
+# each candidate found with set function (see line 33) needs variable
 khan = []
 correy = []
 li = []
 otooley = []
 
-
 with open(csvpath, encoding='utf-8') as csvfile:
     csvreader = csv.reader(csvfile, delimiter = ',')
     csv_header = next(csvreader)
-    #print(f"CSV Header: {csv_header}")
-
     for row in csvreader: 
-        # votes.append(row[0])
-        # county.append(row[1])
         candidate.append(row[2])
-        
+        # populating individual candidates lists
         if row[2] == "Khan":
             khan.append(row)
         elif row[2] == "Correy":
@@ -31,31 +27,53 @@ with open(csvpath, encoding='utf-8') as csvfile:
             otooley.append(row)
 
 # to check unique candidates
-#print(set(candidate)) # returns O'Tooley, 'Khan', 'Li', 'Correy' --> added these to lists created
+set(candidate) # returns O'Tooley, 'Khan', 'Li', 'Correy' --> added these to lists created
 
-# create variables for readability
-total_votes = (len(candidate))
+
+# create Candidates list for print output
+candidate_list = ["Khan","Correy","Li","O'tooley"]
+
+# create Votes variables for readability
 khan_votes = (len(khan))
 correy_votes = (len(correy))
 li_votes = (len(li))
 otooley_votes = (len(otooley))
+total_votes = (len(candidate))
+# create list of Votes for print output
+votes_list = [khan_votes, correy_votes, li_votes, otooley_votes]
 
-khan_ratio = round((khan_votes / total_votes * 100),3)
+# create Ratios variables for readibility
+khan_ratio = round((khan_votes / total_votes * 100),3)  #not sure how to add three decimals, round3 is not working
 correy_ratio = round((correy_votes / total_votes * 100),3)
 li_ratio = round((li_votes / total_votes * 100),3)
 otooley_ratio = round((otooley_votes / total_votes * 100),3)
+# create list of Ratios for print output
+ratio_list = [khan_ratio, correy_ratio, li_ratio, otooley_ratio]
 
-print(f'Khan: {khan_ratio}% ({khan_votes})')
-print(f'Correy: {correy_ratio}% ({correy_votes})')
-print(f'Li: {Li_ratio}% ({Li_votes})')
-print(f'O\'Tooley: {otooley_ratio}% ({otooley_votes})')
-print("----------------------------------")
-
-
-
-# # checking lists len is same
-# print(len(votes))   #3521001
-# print(len(county))
-# print(len(candidate))
+# find Winner and store variable
+maxvalue = max(ratio_list)
+winner_index = ratio_list.index(maxvalue)
+winner = candidate_list[winner_index]
 
 
+print("Election Results")
+print("-------------------")
+print(f'Total Votes: {total_votes}')
+for x,y,z in zip(candidate_list, ratio_list, votes_list):
+    print(f' {x} : {y}% ({z})')
+print("-------------------")
+print(f'Winner: {winner}')
+print("-------------------")
+
+# exporting a text file with the results
+output_path = os.path.join('C:/Users/Laura/Desktop/Homework/python-challenge/PyPoll/analysis/new.csv')
+with open(output_path, 'w', newline='') as csvfile:
+    csvwriter = csv.writer(csvfile, delimiter=',')
+    csvwriter.writerow(["Election Results"])
+    csvwriter.writerow(["---------------------"])
+    csvwriter.writerow([f'Total Votes: {total_votes}'])
+    csvwriter.writerow(["---------------------"])
+    for x,y,z in zip(candidate_list, ratio_list, votes_list):
+        csvwriter.writerow(f' {x} : {y}% ({z})')
+    csvwriter.writerow(["---------------------"])
+    csvwriter.writerow([f'Winner: {winner}'])
