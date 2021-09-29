@@ -14,19 +14,22 @@ with open(csvpath, encoding='utf-8') as csvfile:
     csv_header = next(csvreader)
     for row in csvreader:
         candidate.append(row[2])
-#print(Counter(candidate))
-candidate_count = Counter(candidate) # this finds each 
-candidate_dict = (dict(candidate_count))
+#print(Counter(candidate)) # it works!
+candidate_dict = dict(Counter(candidate)) # this finds each candidate's votes and puts them in a dict
 tot_votes = sum((candidate_dict.values()))
+winner = max(candidate_dict, key=candidate_dict. get) # this gets the key of max value
 
+
+
+print('Election Results')
+print('---------------------------')
+print(f'Total Votes: {tot_votes}')
+print('---------------------------')
 for key in candidate_dict:
-    print(f'{key}: {candidate_dict[key]}')
-    
-
-
-
-
-
+    print(f'{key}: {round(candidate_dict[key]/tot_votes*100,3)}% ({candidate_dict[key]})')
+print('---------------------------')
+print(f'Winner: {winner}')
+print('----------------------------')
 
 
 
