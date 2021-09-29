@@ -14,7 +14,20 @@ with open(csvpath, encoding='utf-8') as csvfile:
     csv_header = next(csvreader)
     for row in csvreader:
         candidate.append(row[2])
-print(Counter(candidate))
+#print(Counter(candidate))
+candidate_count = Counter(candidate) # this finds each 
+candidate_dict = (dict(candidate_count))
+tot_votes = sum((candidate_dict.values()))
+
+for key in candidate_dict:
+    print(f'{key}: {candidate_dict[key]}')
+    
+
+
+
+
+
+
 
 
 
