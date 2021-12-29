@@ -3,18 +3,18 @@ import os
 import csv
 csvpath = os.path.join('C:/Users/Laura/Desktop/Homework/python-challenge/PyPoll/Resources/election_data.csv')
 
-
 # Trying something different to count number of occurrences for each element in Candidate. 
 # Found "Counter" in python collections
 
 from collections import Counter
 candidate=[]
+
 with open(csvpath, encoding='utf-8') as csvfile:
     csvreader = csv.reader(csvfile, delimiter = ',')
     csv_header = next(csvreader)
     for row in csvreader:
         candidate.append(row[2])
-#print(Counter(candidate)) # it works!
+#print(Counter(candidate)) # Tested Counter: it works!
 candidate_dict = dict(Counter(candidate)) # this finds each candidate's votes and puts them in a dict
 tot_votes = sum((candidate_dict.values()))
 winner = max(candidate_dict, key=candidate_dict. get) # this gets the key of max value
